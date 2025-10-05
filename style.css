@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom right, #e9f6ff, #bff5e7);
+  color: #000000;
+  min-height: 100vh;
+}
+
+.main {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  width: 100%;
+  height: 80px;
+  padding: 0 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+   position: fixed;
+}
+/* Logo */
+.navbar img {
+object-fit: contain;
+  width: 170px;   /* smaller logo */
+  height: auto;
+}
+
+/* Navigation Links */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #000000;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  color: #ffeb3b;
+}
+
+.home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+/* Content */
+.content {
+    width: 50%;
+    text-align: center;
+    margin-top: 250px;
+    margin-left: 50px;
+    padding: 0 20px;
+}
+
+.content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+}
+
+.content h1 span {
+  color: #f04d25;
+}
+.content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #414141;
+}
+
+/* Button */
+.content button {
+  background: #ffeb3b;
+  color: #333;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.content button:hover {
+  background: #ffd600;
+}
+
+.home-photo {
+    
+    width: 50%;
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    margin-top: 30px;
+}
+.home-photo img{
+    
+    
+    width: 600px;   /* smaller logo */
+    height: 470px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .content h1 {
+    font-size: 2.2rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+  }
+}
