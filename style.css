@@ -67,27 +67,27 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 100px 60px 0; /* leaves space for fixed navbar */
-  margin-top: 150px;
+  margin-top: 170px;
  
 }
 
 .content {
   width: 50%;
   text-align: left;
-  padding-right: 20px;
+  padding-left: 40px;
 }
 
 .content h1 {
-  font-size: 3.5rem;
+  font-size: 5rem;
   margin-bottom: 20px;
 }
 
 .content h1 span {
-  color: #f04d25;
+  color: #f77327;
 }
 
 .content p {
-  font-size: 1.2rem;
+  font-size: 2rem;
   margin-bottom: 30px;
   color: #414141;
 }
@@ -97,7 +97,7 @@ body {
   color: #fff;
   border: none;
   padding: 12px 30px;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
