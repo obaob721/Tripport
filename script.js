@@ -107,3 +107,15 @@ function validatePassengerForm() {
   alert("Passenger information submitted successfully!");
   return true;
 }
+
+
+document.getElementById("bookNowBtn").addEventListener("click", function() {
+  // Show success message
+  const msg = document.getElementById("successMessage");
+  msg.classList.remove("hidden");
+
+  // Optionally disable button after booking
+  this.disabled = true;
+  this.style.backgroundColor = "#ccc";
+  this.innerText = "Booked";
+});
