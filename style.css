@@ -283,7 +283,7 @@ button#searchFlight:hover {
 .passenger {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #350f63, #ffb870);
+  background: linear-gradient(to bottom, #170036, #ffb870);
   padding: 100px 60px;
   display: flex;
   justify-content: center;
@@ -305,8 +305,14 @@ button#searchFlight:hover {
   margin-bottom: 20px;
 }
 
+#passengerForm{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 30px; 
+}
+
 .form-group {
-  display: flex;
+  display: grid;
   flex-direction: column;
   margin-bottom: 15px;
 }
@@ -325,6 +331,7 @@ button#searchFlight:hover {
 }
 
 button[type="submit"] {
+  grid-column: span 2;
   width: 100%;
   padding: 12px;
   background-color: #E9641F;
@@ -337,7 +344,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #E9641F;
+  background-color: #f15101;
 }
 
 
