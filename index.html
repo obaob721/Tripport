@@ -4,106 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tripport</title>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
    
-        <header class="navbar">        
-            <img src="img/logo.png" alt="logo">
-            <ul>
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#about">ABOUT</a></li>
-                <li><a href="#book">BOOK</a></li>
-            </ul>
-            <ul>
-                <li><a href="#">LOGIN</a></li>
-                <li>/</li>
-                <li><a href="#">SIGN UP</a></li>
-            </ul>
-        </header>                      
+    <header class="navbar">        
+        <img src="img/logo.png" alt="logo">
+        <ul>
+            <li><a href="#home" class="active">HOME</a></li>
+            <li><a href="#book" class="active">BOOK</a></li>
+            <li><a href="#flight" class="active">FLIGHT</a></li>
+            <li><a href="#passenger" class="active">PASSENGER</a></li>
+            <li><a href="#summary" class="active">SUMMARY</a></li>
+        </ul>
+    </header>
 
-        <section class="home" id="home">
-            <div class="content">
-                <h1>Welcome to <span>Tripport</span></h1>
-                <p>Your gateway to the world. Book your flights with us <br>
-                    and explore new destinations.</p>
-                <button>Book A Flight</button>
+    <section class="home" id="home">
+        <div class="content">
+            <h1>Welcome to <span>Tripport</span></h1>
+            <p>Your gateway to the world. Book your flights with us <br>
+                and explore new destinations.</p>
+            <button>Book A Flight</button>
+        </div>
+    </section>
+
+    <section class="book" id="book">
+        <div class="book-container">
+        <h2>Booking Details</h2>
+        <form id="bookingForm">
+            <div class="form-group">
+            <label for="from">From:</label>
+            <input type="text" id="from" placeholder="Enter origin" required>
             </div>
-            
-        </section>
 
-        <section class="about">
-            <div class="">
-
+            <div class="form-group">
+            <label for="to">To:</label>
+            <input type="text" id="to" placeholder="Enter destination" required>
             </div>
 
-        </section>
+            <div class="form-group">
+            <label for="flightType">Flight Type:</label>
+            <select id="flightType" required>
+                <option value="oneway">One Way</option>
+                <option value="roundtrip">Round Trip</option>
+            </select>
+            </div>
+
+            <div class="form-group">
+            <label for="departDate">Depart Date:</label>
+            <input type="date" id="departDate" required>
+            </div>
+
+            <div class="form-group" id="returnDateContainer" style="display:none;">
+            <label for="returnDate">Return Date:</label>
+            <input type="date" id="returnDate">
+            </div>
+
+            <div class="form-group">
+            <label for="passengers">Passengers:</label>
+            <input type="number" id="passengers" min="1" value="1" required>
+            </div>
+
+            <button type="submit" id="searchFlight">Search Flight</button>
+        </form>
+        </div>
+    </section>
+
+    <section class="flight" id="flight">
+        <div class="flight-container">
+        <h2>Available Flights</h2>
+        <div id="flightsList" class="flights-container"></div>
+        </div>
+    </section>
 
 
 
 
 
-        <section class="book" id="book">
-            <div class="booking-tile">
 
-                <div class="tab-menu">
-                    <button class="tab active">Flights</button>
-                    <button class="tab">Rentcar</button>
-                    <button class="tab">Hotel</button>
-                </div>
+<script src="script.js"></script>
 
-                <form class="booking-form">
-                    <div class="form-item">
-                        <label>From</label>
-                        <input type="text" placeholder="Zurich">
-                    </div>
-                    <div class="form-item">
-                        <label>To</label>
-                        <input type="text" placeholder="Paris">
-                    </div>
-                    <div class="form-item">
-                        <label>Arrival</label>
-                        <input type="date" value="2025-10-05">
-                    </div>
-                    <div class="form-item">
-                        <label>Departure</label>
-                        <input type="date" value="2025-10-10">
-                    </div>
-                    <div class="form-item">
-                        <label>Passengers</label>
-                        <select>
-                            <option>1 adult</option>
-                            <option>2 adults</option>
-                            <option>3 adults</option>
-                            <option>4 adults</option>
-                        </select>
-                    </div>
-                    <div class="form-item">
-                        <label>Class</label>
-                        <select>
-                            <option>Economy</option>
-                            <option>Business</option>
-                            <option>First Class</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="search-btn">Search</button>
-                </form>
-
-            </div>  
-
-        </section>
-        
-        
-        
-
-         
-  
-    
-    
-    <script>
-
-    </script>
 </body>
 </html>
