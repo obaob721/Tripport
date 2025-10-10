@@ -218,8 +218,8 @@ button#searchFlight:hover {
   
   
   border-radius: 10px;
-  padding: 40px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  
+  
   box-sizing: border-box;
 }
 
@@ -227,21 +227,21 @@ button#searchFlight:hover {
   text-align: center;
   color: #003366;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .flights-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
   width: 100%;
 }
 
 .flight-card {
   flex: 1 1 250px; /* responsive width */
   max-width: 300px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.50);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -254,7 +254,7 @@ button#searchFlight:hover {
 
 .flight-card h3 {
   margin: 0;
-  color: #007bff;
+   color: #fa4903;
 }
 
 .flight-card p {
@@ -264,7 +264,7 @@ button#searchFlight:hover {
 
 .flight-card button {
   margin-top: 5px;
-  background-color: #007bff;
+  background-color: #E9641F;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -274,12 +274,71 @@ button#searchFlight:hover {
 }
 
 .flight-card button:hover {
-  background-color: #0056b3;
+  background-color: #e74d00;
 }
 
 
 
 
+.passenger {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #350f63, #ffb870);
+  padding: 100px 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.passenger-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.passenger-container h2 {
+  text-align: center;
+  color: #FFD580;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #E9641F;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #E9641F;
+}
 
 
 
