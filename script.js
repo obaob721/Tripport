@@ -6,8 +6,14 @@ const flightType = document.getElementById("flightType");
 const returnDateContainer = document.getElementById("returnDateContainer");
 let selectedFlight = null;
 
+// 🟩 Data storage
+let bookingSummary = {
+  bookingData: null,
+  passengers: []
+};
+
 flightType.addEventListener("change", () => {
-  returnDateContainer.style.display = 
+  returnDateContainer.style.display =
     flightType.value === "roundtrip" ? "block" : "none";
 });
 
@@ -19,13 +25,7 @@ const schedules = [
   { flightNo: "5J 560", destination: "Manila → Cebu", departTime: "08:00 AM", hours: 1.5, price: 3500, seats: 20, fareType: "Promo Fare", type: "oneway" },
   { flightNo: "PR 2814", destination: "Manila → Davao", departTime: "10:30 AM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
   { flightNo: "DG 6208", destination: "Manila → Iloilo", departTime: "02:00 PM", hours: 1, price: 3100, seats: 12, fareType: "Promo Fare", type: "oneway" },
-  { flightNo: "5J 560", destination: "Manila → Cebu", departTime: "08:00 AM", hours: 1.5, price: 3500, seats: 20, fareType: "Promo Fare", type: "oneway" },
-  { flightNo: "PR 2814", destination: "Manila → Davao", departTime: "10:30 AM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
-  { flightNo: "DG 6208", destination: "Manila → Iloilo", departTime: "02:00 PM", hours: 1, price: 3100, seats: 12, fareType: "Promo Fare", type: "oneway" },
-  { flightNo: "PR 2814", destination: "Manila → Davao", departTime: "10:30 AM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
-  { flightNo: "DG 6208", destination: "Manila → Iloilo", departTime: "02:00 PM", hours: 1, price: 3100, seats: 12, fareType: "Promo Fare", type: "oneway" },
-    
-    
+
   // 🟦 Round Trip Flights
   { flightNo: "5J 561", destination: "Cebu ↔ Manila", departTime: "09:00 AM", returnTime: "06:00 PM", hours: 3, price: 7000, seats: 18, fareType: "Promo Fare", type: "roundtrip" },
   { flightNo: "PR 4512", destination: "Davao ↔ Manila", departTime: "11:00 AM", returnTime: "07:00 PM", hours: 4, price: 8900, seats: 10, fareType: "None", type: "roundtrip" },
@@ -72,7 +72,7 @@ function renderFlights(bookingData) {
   });
 }
 
-// ✅ Booking form submission (just render flights, no hiding)
+// ✅ Booking form submission (render flights)
 bookingForm.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -85,36 +85,113 @@ bookingForm.addEventListener("submit", e => {
     passengers: parseInt(document.getElementById("passengers").value)
   };
 
+  bookingSummary.bookingData = bookingData;
+  bookingSummary.passengers = []; // reset passenger list if new booking
   renderFlights(bookingData);
 });
 
-
+// ===============================
+// 👤 PASSENGER SECTION LOGIC
+// ===============================
+let passengerCount = 0;
 
 function validatePassengerForm() {
-  const phone = document.getElementById("phone").value;
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
   const age = document.getElementById("age").value;
+  const gender = document.getElementById("gender").value;
 
   if (!/^\d{11}$/.test(phone)) {
     alert("Phone number must be exactly 11 digits.");
     return false;
   }
-
   if (age < 1 || age > 120) {
     alert("Please enter a valid age between 1 and 120.");
     return false;
   }
 
-  alert("Passenger information submitted successfully!");
-  return true;
+  // ✅ store passenger info
+  bookingSummary.passengers.push({
+    firstName, lastName, email, phone, age, gender
+  });
+
+  passengerCount++;
+
+  // ✅ clear form for next passenger if not yet complete
+  const totalPassengers = bookingSummary.bookingData?.passengers || 1;
+  if (passengerCount < totalPassengers) {
+    alert(`Passenger ${passengerCount} added. Please enter details for Passenger ${passengerCount + 1}.`);
+    document.getElementById("passengerForm").reset();
+  } else {
+    alert("All passenger details collected successfully!");
+    document.getElementById("passengerForm").reset();
+    displaySummary();
+  }
+
+  return false; // prevent reload
 }
 
+// ===============================
+// 📋 SUMMARY DISPLAY LOGIC
+// ===============================
+function displaySummary() {
+  const passengerSummary = document.getElementById("passenger-summary");
+  const flightSummary = document.getElementById("flight-summary");
 
-document.getElementById("bookNowBtn").addEventListener("click", function() {
-  // Show success message
+  passengerSummary.innerHTML = "";
+  flightSummary.innerHTML = "";
+
+  const { bookingData, passengers } = bookingSummary;
+
+  // 🧍‍♂️ Passenger Summary
+  if (passengers.length > 0) {
+    passengers.forEach((p, i) => {
+      const div = document.createElement("div");
+      div.classList.add("passenger-card");
+      div.innerHTML = `
+        <h4>Passenger ${i + 1}</h4>
+        <p><b>Name:</b> ${p.firstName} ${p.lastName}</p>
+        <p><b>Email:</b> ${p.email}</p>
+        <p><b>Phone:</b> ${p.phone}</p>
+        <p><b>Age:</b> ${p.age}</p>
+        <p><b>Gender:</b> ${p.gender}</p>
+        <hr>
+      `;
+      passengerSummary.appendChild(div);
+    });
+  }
+
+  // 🛫 Flight Summary
+  if (bookingData && selectedFlight) {
+    flightSummary.innerHTML = `
+      <p><b>From:</b> ${bookingData.from}</p>
+      <p><b>To:</b> ${bookingData.to}</p>
+      <p><b>Flight Type:</b> ${bookingData.flightType}</p>
+      <p><b>Depart Date:</b> ${bookingData.departDate}</p>
+      ${
+        bookingData.flightType === "roundtrip"
+          ? `<p><b>Return Date:</b> ${bookingData.returnDate}</p>`
+          : ""
+      }
+      <p><b>Passengers:</b> ${bookingData.passengers}</p>
+      <hr>
+      <p><b>Flight No:</b> ${selectedFlight.flightNo}</p>
+      <p><b>Destination:</b> ${selectedFlight.destination}</p>
+      <p><b>Fare Type:</b> ${selectedFlight.fareType}</p>
+      <p><b>Price per Passenger:</b> ₱${selectedFlight.price}</p>
+      <p><b>Total Price:</b> ₱${selectedFlight.price * bookingData.passengers}</p>
+    `;
+  }
+}
+
+// ===============================
+// ✅ BOOK NOW BUTTON
+// ===============================
+document.getElementById("bookNowBtn").addEventListener("click", function () {
   const msg = document.getElementById("successMessage");
   msg.classList.remove("hidden");
-
-  // Optionally disable button after booking
   this.disabled = true;
   this.style.backgroundColor = "#ccc";
   this.innerText = "Booked";

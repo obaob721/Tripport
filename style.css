@@ -379,13 +379,14 @@ button[type="submit"]:hover {
 }
 
 #passenger-summary, #flight-summary{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 
 .summary-section {
-  display: flex;
+  display: grid;
   flex-direction: column;
   background: #f8f9fa;
   border-radius: 10px;
