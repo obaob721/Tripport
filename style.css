@@ -6,6 +6,10 @@
   font-family: "DIN Condensed", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: #000;
   min-height: 100vh;
@@ -69,7 +73,34 @@ body {
   color: #ff9800;
 }
 
+/* Social links */
+.social-links {
+  width: 60%; 
+  display: flex;
+  gap: 60px;
+  margin-left: 20px;
+}
 
+.social-links a {
+  color: #f8f4f4;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.social-links a:hover {
+  color: #ff9800;
+}
+
+/* Search icon styling */
+.search i {
+  font-size: 18px;
+  color: #f8f4f4;
+  transition: 0.3s;
+}
+
+.search i:hover {
+  color: #ff9800;
+}
 
 
 
@@ -135,6 +166,7 @@ body {
 
 
 .book-container {
+  flex: 1;
   background: rgba(255, 255, 255, 0.1);
   padding: 30px;
   border-radius: 10px;
@@ -193,6 +225,45 @@ button#searchFlight:hover {
   transform: scale(1.03);
 }
 
+
+.book-text {
+  margin-left: 50px;
+  flex: 1;
+  color: #fff;
+  text-align: left;
+  animation: fadeInRight 1s ease;
+}
+
+.book-text h1 {
+  font-size: 2.5rem;
+  color: #FFD580;
+  margin-bottom: 15px;
+}
+
+.book-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #f5f5f5;
+  max-width: 500px;
+}
+.big-icon {
+  font-size: 150px;
+  color: #5c4875;
+  margin-bottom: 20px;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 
 
 
@@ -283,7 +354,7 @@ button#searchFlight:hover {
 .passenger {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #170036, #ffb870);
+  background: linear-gradient(to bottom, #170036, #ffab56);
   padding: 100px 60px;
   display: flex;
   justify-content: center;
@@ -364,7 +435,7 @@ button[type="submit"]:hover {
 }
 
 .summary-container {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.30);
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -374,7 +445,7 @@ button[type="submit"]:hover {
 
 .summary-container h2 {
   text-align: center;
-  color: #003366;
+  color: #da5700;
   margin-bottom: 30px;
 }
 
@@ -386,17 +457,19 @@ button[type="submit"]:hover {
 
 
 .summary-section {
-  display: grid;
-  flex-direction: column;
-  background: #f8f9fa;
+  background: #fae0a8;
   border-radius: 10px;
   padding: 20px;
+  border-left: 5px solid #ff3300;
   margin-bottom: 20px;
-  border-left: 5px solid #007bff;
+  display: inline-block;
+  width: 48%;
+  vertical-align: top;
 }
 
 .summary-section h3 {
-  color: #007bff;
+  text-align: center;
+  color: #ff4800;
   margin-bottom: 10px;
 }
 
@@ -419,7 +492,7 @@ button[type="submit"]:hover {
 
 #bookNowBtn {
   padding: 12px 30px;
-  background-color: #007bff;
+  background-color: #E9641F;
   color: white;
   border: none;
   border-radius: 8px;
@@ -429,7 +502,7 @@ button[type="submit"]:hover {
 }
 
 #bookNowBtn:hover {
-  background-color: #0056b3;
+  background-color: #f05000;
 }
 
 #successMessage {

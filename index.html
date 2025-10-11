@@ -4,27 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tripport</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
    
     <header class="navbar">        
         <img src="img/logo.png" alt="logo">
+
+     <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+     </div>
         <ul>
             <li><a href="#home" class="active">HOME</a></li>
             <li><a href="#book" class="active">BOOK</a></li>
             <li><a href="#flight" class="active">FLIGHT</a></li>
             <li><a href="#passenger" class="active">PASSENGER</a></li>
             <li><a href="#summary" class="active">SUMMARY</a></li>
+            <li><a href="#" class="search"><i class="fas fa-search"></i></a></li>
         </ul>
-    </header>
+</header>
 
     <section class="home" id="home">
         <div class="content">
             <h1>Welcome to <span>Tripport</span></h1>
             <p>Your gateway to the world. Book your flights with us <br>
                 and explore new destinations.</p>
-            <button>Book A Flight</button>
+            <a href="#book">
+                <button id="bookBtn">Book A Flight</button>
+            </a>
         </div>
     </section>
 
@@ -67,6 +78,11 @@
 
             <button type="submit" id="searchFlight">Search Flight</button>
         </form>
+        </div>
+        <div class="book-text">
+         <i class="fas fa-earth-americas big-icon"></i>
+            <h1>Fly to Your Next Adventure</h1>
+            <p>Book your flight quickly and easily — experience smooth, modern travel planning with us. Whether it’s a one-way trip or a round journey, your destination awaits.</p>
         </div>
     </section>
 
@@ -139,7 +155,7 @@
     </div>
 
     <div id="successMessage" class="hidden">
-      <p>🎉 Your booking has been successfully confirmed! Thank you for flying with AirLines.</p>
+      <p>🎉 Your booking has been successfully confirmed! Thank you for flying with Tripport AirLines.</p>
     </div>
   </div>
 </section>
