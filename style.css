@@ -48,6 +48,7 @@ body {
 }
 
 .navbar ul {
+  
   list-style: none;
   justify-content: space-evenly;
   width: 60%; 
@@ -60,17 +61,17 @@ body {
   position: relative;
   text-decoration: none;
   color: #f8f4f4;
-  font-weight: 500;
+  font-weight: bold;
   padding: 5px 0;
   transition: color 0.3s ease;
 }
 
 .navbar ul li a.active {
-  border-bottom: 2px solid #ff9800;
+  border-bottom: 3px solid #ff9035;
 }
 
 .navbar ul li a:hover {
-  color: #ff9800;
+  color: #ffd900;
 }
 
 /* Social links */
@@ -248,7 +249,7 @@ button#searchFlight:hover {
 }
 .big-icon {
   font-size: 150px;
-  color: #5c4875;
+  color: #FFD580;
   margin-bottom: 20px;
   display: block;
   animation: float 3s ease-in-out infinite;

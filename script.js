@@ -200,3 +200,60 @@ document.getElementById("bookNowBtn").addEventListener("click", function () {
   this.style.backgroundColor = "#ccc";
   this.innerText = "Booked";
 });
+
+
+
+// ===============================
+// ✅ NAVBAR SET TO ACTIVE
+// ===============================
+
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("ul li a");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (scrollY >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+    if (link.getAttribute("href").includes(current)) {
+      link.classList.add("active");
+    }
+  });
+});
+
+
+
+// ===============================
+// ✅ SCROLL + RENDER FLIGHTS
+// ===============================
+
+document.getElementById("searchFlight").addEventListener("click", function(e) {
+  e.preventDefault(); // prevent form reload
+
+  // collect booking info from the form
+  const bookingData = {
+    from: document.getElementById("from").value,
+    to: document.getElementById("to").value,
+    flightType: document.getElementById("flightType").value,
+    departDate: document.getElementById("departDate").value,
+    returnDate: document.getElementById("returnDate").value,
+    passengers: document.getElementById("passengers").value
+  };
+
+  // show the flight section
+  document.getElementById("flight").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+  // ✅ Call your function that shows available flights
+  renderFlights(bookingData);
+});
+
