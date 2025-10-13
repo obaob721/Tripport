@@ -80,6 +80,8 @@ function renderFlights(bookingData) {
   });
 }
 
+
+
 // ✅ Booking form submission (render flights)
 bookingForm.addEventListener("submit", e => {
   e.preventDefault();
