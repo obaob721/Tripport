@@ -76,10 +76,10 @@ body {
 
 /* Social links */
 .social-links {
-  width: 60%; 
+  width: 35%; 
   display: flex;
   gap: 60px;
-  margin-left: 20px;
+  margin-left: 120px;
 }
 
 .social-links a {
@@ -283,15 +283,14 @@ button#searchFlight:hover {
 }
 
 .flight-container {
+  
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  
-  
+  height: 500px;
+  margin-top: 40px;
   border-radius: 10px;
-  
-  
   box-sizing: border-box;
 }
 
@@ -299,22 +298,24 @@ button#searchFlight:hover {
   text-align: center;
   color: #003366;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .flights-container {
+  
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 50px;
   width: 100%;
+  margin-bottom: 120px;
 }
 
 .flight-card {
   flex: 1 1 250px; /* responsive width */
-  max-width: 300px;
-  background: rgba(255, 255, 255, 0.50);
-  padding: 20px;
+  max-width: 350px;
+  background: rgba(255, 255, 255, 0.90);
+  padding: 25px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: 0.3s ease;
@@ -325,17 +326,19 @@ button#searchFlight:hover {
 }
 
 .flight-card h3 {
+  padding-bottom: 20px;
   margin: 0;
    color: #fa4903;
 }
 
 .flight-card p {
+  padding-bottom: 15px;
   margin: 5px 0;
   color: #333;
 }
 
 .flight-card button {
-  margin-top: 5px;
+  margin-top: 10px;
   background-color: #E9641F;
   color: white;
   border: none;

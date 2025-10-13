@@ -24,14 +24,14 @@ flightType.addEventListener("change", () => {
 // ===============================
 const schedules = [
   // 🟩 One Way Flights
-  { flightNo: "5J 560", destination: "Cebu → Manila", departTime: "08:00 AM", hours: 1.5, price: 3500, seats: 20, fareType: "Promo Fare", type: "oneway" },
-  { flightNo: "PR 2814", destination: "Cebu → Iloilo", departTime: "10:30 AM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
-  { flightNo: "DG 6208", destination: "Cebu → Davao", departTime: "02:00 PM", hours: 1, price: 3100, seats: 12, fareType: "Promo Fare", type: "oneway" },
+  { flightNo: "5J 560", destination: "Cebu → Manila", departTime: "06:00 AM", hours: 1.5, price: 3500, seats: 20, fareType: "Promo Fare", type: "oneway" },
+  { flightNo: "PR 2814", destination: "Cebu → Iloilo", departTime: "02:00 PM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
+  { flightNo: "DG 6208", destination: "Cebu → Davao", departTime: "10:00 PM", hours: 1, price: 3100, seats: 12, fareType: "Promo Fare", type: "oneway" },
 
   // 🟦 Round Trip Flights
-  { flightNo: "5J 561", destination: "Cebu ↔ Manila", departTime: "09:00 AM", returnTime: "06:00 PM", hours: 3, price: 7000, seats: 18, fareType: "Promo Fare", type: "roundtrip" },
-  { flightNo: "PR 4512", destination: "Cebu ↔ Iloilo", departTime: "11:30 AM", returnTime: "07:00 PM", hours: 4, price: 8900, seats: 10, fareType: "None", type: "roundtrip" },
-  { flightNo: "DG 8123", destination: "Cebu ↔ Davao", departTime: "03:00 PM", returnTime: "04:00 PM", hours: 3.5, price: 7500, seats: 8, fareType: "Promo Fare", type: "roundtrip" },
+  { flightNo: "5J 561", destination: "Cebu ↔ Manila", departTime: "09:00 AM", returnTime: "10:00 PM", hours: 3, price: 7000, seats: 18, fareType: "Promo Fare", type: "roundtrip" },
+  { flightNo: "PR 4512", destination: "Cebu ↔ Iloilo", departTime: "12:00 PM", returnTime: "1:00 AM", hours: 4, price: 8900, seats: 10, fareType: "None", type: "roundtrip" },
+  { flightNo: "DG 8123", destination: "Cebu ↔ Davao", departTime: "03:00 PM", returnTime: "04:00 AM", hours: 3.5, price: 7500, seats: 8, fareType: "Promo Fare", type: "roundtrip" },
 ];
 
 function renderFlights(bookingData) {
