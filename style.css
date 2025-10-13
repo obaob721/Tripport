@@ -71,7 +71,7 @@ body {
 }
 
 .navbar ul li a:hover {
-  color: #ffd900;
+  color: #FFD580;
 }
 
 /* Social links */
@@ -113,13 +113,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 60px 0; /* leaves space for fixed navbar */
+  padding: 5px 60px 100px; /* leaves space for fixed navbar */
 }
 
 .content {
-  width: 50%;
+  width: 60%;
   text-align: left;
-  padding-left: 40px;
+  padding-left: 2cqw;
 }
 
 .content h1 {
@@ -231,23 +231,26 @@ button#searchFlight:hover {
   margin-left: 50px;
   flex: 1;
   color: #fff;
-  text-align: left;
+  text-align: center;
   animation: fadeInRight 1s ease;
 }
 
 .book-text h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #FFD580;
   margin-bottom: 15px;
 }
 
 .book-text p {
+  
+  text-align: center;
   font-size: 1.1rem;
   line-height: 1.6;
   color: #f5f5f5;
   max-width: 500px;
 }
 .big-icon {
+  text-align: center;
   font-size: 150px;
   color: #FFD580;
   margin-bottom: 20px;
@@ -460,38 +463,66 @@ button[type="submit"]:hover {
 }
 
 
+.summary {
+  width: 100%;
+  min-height: 100vh;
+  background: url('img/airplane3.jpg') no-repeat center center/cover;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.summary-container {
+  background: rgba(255, 255, 255, 0.75);
+  padding: 30px;
+  margin-top: 75px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1000px;
+}
+
+.summary-container h2 {
+  text-align: center;
+  color: #da5700;
+  margin-bottom: 30px;
+}
+
 .summary-section {
-  background: #fae0a8;
-  border-radius: 10px;
-  padding: 20px;
-  border-left: 5px solid #ff3300;
-  margin-bottom: 20px;
-  display: inline-block;
-  width: 48%;
-  vertical-align: top;
+  margin-bottom: 30px;
 }
 
 .summary-section h3 {
-  text-align: center;
   color: #ff4800;
   margin-bottom: 10px;
+  text-align: left;
 }
 
-.summary-section p, 
-.summary-section li {
-  margin: 5px 0;
-  color: #333;
-  font-size: 16px;
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff6e6;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.summary-section ul {
-  list-style: none;
-  padding-left: 10px;
+.summary-table th,
+.summary-table td {
+  border: 1px solid #ffb380;
+  padding: 10px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.summary-table th {
+  background-color: #ffa64d;
+  color: white;
+  font-weight: bold;
 }
 
 .summary-button {
   text-align: center;
-  margin-top: 20px;
 }
 
 #bookNowBtn {
@@ -520,6 +551,7 @@ button[type="submit"]:hover {
 .hidden {
   display: none;
 }
+
 
 
 

@@ -94,6 +94,13 @@
     </section>
 
     <section class="passenger" id="passenger">
+        <div class="passenger-left">
+          <i class="fas fa-user-friends"></i>
+          <h1>Passenger Details</h1>
+          <p>Provide your personal details to ensure a smooth and comfortable flight experience. 
+          Accurate information helps us serve you better.</p>
+        </div>
+        
         <div class="passenger-container">
             <h2>Passenger Information</h2>
             <form id="passengerForm" onsubmit="return validatePassengerForm()">
@@ -136,29 +143,59 @@
         </div>
     </section>
 
-    <section class="summary" id="summary">
+   <section class="summary" id="summary">
   <div class="summary-container">
     <h2>Booking Summary</h2>
 
     <div class="summary-section">
       <h3>Passenger Details</h3>
-      <div id="passenger-summary"></div>
+      <table id="passenger-summary" class="summary-table">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>Gender</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JS will populate rows here -->
+        </tbody>
+      </table>
     </div>
 
     <div class="summary-section">
       <h3>Flight Information</h3>
-      <div id="flight-summary"></div>
+      <table id="flight-summary" class="summary-table">
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Flight Type</th>
+            <th>Depart Date</th>
+            <th>Return Date</th>
+            <th>Flight No.</th>
+            <th>Destination</th>
+            <th>Fare Type</th>
+            <th>Price/Passenger</th>
+            <th>Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JS will populate single row here -->
+        </tbody>
+      </table>
     </div>
 
     <div class="summary-button">
       <button id="bookNowBtn">Book Now</button>
-    </div>
-
-    <div id="successMessage" class="hidden">
-      <p>🎉 Your booking has been successfully confirmed! Thank you for flying with Tripport AirLines.</p>
+      <div id="successMessage" class="hidden">Booking Successful!</div>
     </div>
   </div>
 </section>
+
 
 
 <script src="script.js"></script>
