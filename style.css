@@ -242,7 +242,7 @@ button#searchFlight:hover {
 }
 
 .book-text p {
-  
+  margin-left: 50px;
   text-align: center;
   font-size: 1.1rem;
   line-height: 1.6;
@@ -367,6 +367,33 @@ button#searchFlight:hover {
   justify-content: center;
   align-items: center;
 }
+
+.passenger-left {
+  margin-right: 150px;
+  flex: 1;
+  color: white;
+  text-align: center;
+  max-width: 500px;
+}
+
+.passenger-left i {
+  font-size: 80px;
+  color: #FFD580;
+  margin-bottom: 20px;
+}
+
+.passenger-left h1 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #FFD580;
+}
+
+.passenger-left p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #f1f1f1;
+}
+
 
 .passenger-container {
   background: rgba(255, 255, 255, 0.1);
@@ -526,7 +553,7 @@ button[type="submit"]:hover {
 }
 
 #bookNowBtn {
-  padding: 12px 30px;
+  padding: 15px 50px;
   background-color: #E9641F;
   color: white;
   border: none;
