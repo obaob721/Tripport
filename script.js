@@ -6,7 +6,6 @@ const flightType = document.getElementById("flightType");
 const returnDateContainer = document.getElementById("returnDateContainer");
 let selectedFlight = null;
 
-// 🟩 Data storage
 let bookingSummary = {
   bookingData: null,
   passengers: []
@@ -17,18 +16,13 @@ flightType.addEventListener("change", () => {
     flightType.value === "roundtrip" ? "block" : "none";
 });
 
-
-
 // ===============================
 // ✈️ FLIGHT SECTION LOGIC
 // ===============================
 const schedules = [
-  // 🟩 One Way Flights
   { flightNo: "5J 560", route: "→", departTime: "08:00 AM", hours: 1.5, price: 3500, seats: 20, fareType: "Promo Fare", type: "oneway" },
   { flightNo: "PR 2814", route: "→", departTime: "10:30 AM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
   { flightNo: "DG 6208", route: "→", departTime: "02:00 PM", hours: 1, price: 3100, seats: 12, fareType: "Promo Fare", type: "oneway" },
-
-  // 🟦 Round Trip Flights
   { flightNo: "5J 561", route: "↔", departTime: "09:00 AM", returnTime: "06:00 PM", hours: 3, price: 7000, seats: 18, fareType: "Promo Fare", type: "roundtrip" },
   { flightNo: "PR 4512", route: "↔", departTime: "11:30 AM", returnTime: "07:00 PM", hours: 4, price: 8900, seats: 10, fareType: "None", type: "roundtrip" },
   { flightNo: "DG 8123", route: "↔", departTime: "03:00 PM", returnTime: "04:00 PM", hours: 3.5, price: 7500, seats: 8, fareType: "Promo Fare", type: "roundtrip" },
@@ -42,7 +36,6 @@ function renderFlights(bookingData) {
 
   availableFlights.forEach(flight => {
     const destination = `${bookingData.from} ${flight.route} ${bookingData.to}`; 
-
     const card = document.createElement("div");
     card.classList.add("flight-card");
 
@@ -67,22 +60,23 @@ function renderFlights(bookingData) {
         <button class="select-flight">Select Flight</button>
       `;
 
+    // 🟩 When selecting flight, enable passenger + scroll
     card.querySelector(".select-flight").addEventListener("click", () => {
       selectedFlight = { ...flight, destination };
       alert(`You selected flight ${flight.flightNo}!`);
 
       const totalPassengers = bookingSummary.bookingData?.passengers || 0;
-      if (totalPassengers > 0) setPassengerFormEnabled(true);
+      if (totalPassengers > 0) {
+        setPassengerFormEnabled(true);
+        document.querySelector("#passenger").scrollIntoView({ behavior: "smooth" });
+      }
     });
 
     flightsList.appendChild(card);
   });
 }
 
-
-
-
-// ✅ Booking form submission (render flights)
+// ✅ Booking form submission (render flights + smooth scroll)
 bookingForm.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -96,11 +90,12 @@ bookingForm.addEventListener("submit", e => {
   };
 
   bookingSummary.bookingData = bookingData;
-  bookingSummary.passengers = []; // reset passenger list if new booking
+  bookingSummary.passengers = [];
   renderFlights(bookingData);
+
+  // 🟦 Smooth scroll to flight section
+  document.querySelector("#flight").scrollIntoView({ behavior: "smooth" });
 });
-
-
 
 // ===============================
 // 👤 PASSENGER SECTION LOGIC
@@ -124,40 +119,33 @@ function validatePassengerForm() {
     return false;
   }
 
-  // ✅ store passenger info
-  bookingSummary.passengers.push({
-    firstName, lastName, email, phone, age, gender
-  });
-
+  bookingSummary.passengers.push({ firstName, lastName, email, phone, age, gender });
   passengerCount++;
 
-  // ✅ clear form for next passenger if not yet complete
   const totalPassengers = bookingSummary.bookingData?.passengers || 1;
   if (passengerCount < totalPassengers) {
-  alert(`Passenger ${passengerCount} added. Please enter details for Passenger ${passengerCount + 1}.`);
-  document.getElementById("passengerForm").reset();
-} else {
-  alert("All passenger details collected successfully!");
-  document.getElementById("passengerForm").reset();
-  setPassengerFormEnabled(false); // ✅ Disable passenger inputs after last passenger
-  displaySummary();
+    alert(`Passenger ${passengerCount} added. Please enter details for Passenger ${passengerCount + 1}.`);
+    document.getElementById("passengerForm").reset();
+  } else {
+    alert("All passenger details collected successfully!");
+    document.getElementById("passengerForm").reset();
+    setPassengerFormEnabled(false);
+    displaySummary();
+
+    // 🟨 Scroll to summary after last passenger
+    document.querySelector("#summary").scrollIntoView({ behavior: "smooth" });
+  }
+
+  return false;
 }
-
-  return false; // prevent reload
-}
-
-passengerCount = 0;
-
-// disable passenger form on load
-setPassengerFormEnabled(false);
 
 function setPassengerFormEnabled(enabled) {
   const inputs = document.querySelectorAll("#passengerForm input, #passengerForm select, #addPassengerBtn");
   inputs.forEach(el => el.disabled = !enabled);
 }
 
-
-
+// disable passenger form initially
+setPassengerFormEnabled(false);
 
 // ===============================
 // 📋 SUMMARY DISPLAY LOGIC
@@ -165,13 +153,11 @@ function setPassengerFormEnabled(enabled) {
 function displaySummary() {
   const passengerTableBody = document.querySelector("#passenger-summary tbody");
   const flightTableBody = document.querySelector("#flight-summary tbody");
-
   passengerTableBody.innerHTML = "";
   flightTableBody.innerHTML = "";
 
   const { bookingData, passengers } = bookingSummary;
 
-  // 🧍‍♂️ Passenger Summary Rows
   passengers.forEach((p, i) => {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -180,12 +166,10 @@ function displaySummary() {
       <td>${p.email}</td>
       <td>${p.phone}</td>
       <td>${p.age}</td>
-      <td>${p.gender}</td>
-    `;
+      <td>${p.gender}</td>`;
     passengerTableBody.appendChild(row);
   });
 
-  // 🛫 Flight Summary Row
   if (bookingData && selectedFlight) {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -198,12 +182,10 @@ function displaySummary() {
       <td>${selectedFlight.destination}</td>
       <td>${selectedFlight.fareType}</td>
       <td>₱${selectedFlight.price}</td>
-      <td>₱${selectedFlight.price * bookingData.passengers}</td>
-    `;
+      <td>₱${selectedFlight.price * bookingData.passengers}</td>`;
     flightTableBody.appendChild(row);
   }
 }
-
 
 // ===============================
 // ✅ BOOK NOW BUTTON
@@ -216,33 +198,24 @@ document.getElementById("bookNowBtn").addEventListener("click", function () {
   this.innerText = "Booked";
 });
 
-
 // ===============================
-// ✅ NAVBAR SET TO ACTIVE
+// ✅ NAVBAR ACTIVE HIGHLIGHT
 // ===============================
-
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll("ul li a");
 
 window.addEventListener("scroll", () => {
   let current = "";
-
   sections.forEach(section => {
     const sectionTop = section.offsetTop - 100;
-    if (scrollY >= sectionTop) {
-      current = section.getAttribute("id");
-    }
+    if (scrollY >= sectionTop) current = section.getAttribute("id");
   });
-
   navLinks.forEach(link => {
     link.classList.remove("active");
-    if (link.getAttribute("href").includes(current)) {
-      link.classList.add("active");
-    }
+    if (link.getAttribute("href").includes(current)) link.classList.add("active");
   });
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
-  setPassengerFormEnabled(false); // ensure disabled on initial load
+  setPassengerFormEnabled(false);
 });
