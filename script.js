@@ -24,14 +24,14 @@ flightType.addEventListener("change", () => {
 // ===============================
 const schedules = [
   // 🟩 One Way Flights
-  { flightNo: "5J 560", destination: "Cebu → Manila", departTime: "08:00 AM", hours: 1.5, price: 3500, seats: 20, fareType: "Promo Fare", type: "oneway" },
-  { flightNo: "PR 2814", destination: "Cebu → Iloilo", departTime: "10:30 AM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
-  { flightNo: "DG 6208", destination: "Cebu → Davao", departTime: "02:00 PM", hours: 1, price: 3100, seats: 12, fareType: "Promo Fare", type: "oneway" },
+  { flightNo: "5J 560", route: "→", departTime: "08:00 AM", hours: 1.5, price: 3500, seats: 20, fareType: "Promo Fare", type: "oneway" },
+  { flightNo: "PR 2814", route: "→", departTime: "10:30 AM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
+  { flightNo: "DG 6208", route: "→", departTime: "02:00 PM", hours: 1, price: 3100, seats: 12, fareType: "Promo Fare", type: "oneway" },
 
   // 🟦 Round Trip Flights
-  { flightNo: "5J 561", destination: "Cebu ↔ Manila", departTime: "09:00 AM", returnTime: "06:00 PM", hours: 3, price: 7000, seats: 18, fareType: "Promo Fare", type: "roundtrip" },
-  { flightNo: "PR 4512", destination: "Cebu ↔ Iloilo", departTime: "11:30 AM", returnTime: "07:00 PM", hours: 4, price: 8900, seats: 10, fareType: "None", type: "roundtrip" },
-  { flightNo: "DG 8123", destination: "Cebu ↔ Davao", departTime: "03:00 PM", returnTime: "04:00 PM", hours: 3.5, price: 7500, seats: 8, fareType: "Promo Fare", type: "roundtrip" },
+  { flightNo: "5J 561", route: "↔", departTime: "09:00 AM", returnTime: "06:00 PM", hours: 3, price: 7000, seats: 18, fareType: "Promo Fare", type: "roundtrip" },
+  { flightNo: "PR 4512", route: "↔", departTime: "11:30 AM", returnTime: "07:00 PM", hours: 4, price: 8900, seats: 10, fareType: "None", type: "roundtrip" },
+  { flightNo: "DG 8123", route: "↔", departTime: "03:00 PM", returnTime: "04:00 PM", hours: 3.5, price: 7500, seats: 8, fareType: "Promo Fare", type: "roundtrip" },
 ];
 
 function renderFlights(bookingData) {
@@ -41,12 +41,14 @@ function renderFlights(bookingData) {
   const availableFlights = schedules.filter(f => f.type === bookingData.flightType);
 
   availableFlights.forEach(flight => {
+    const destination = `${bookingData.from} ${flight.route} ${bookingData.to}`; 
+
     const card = document.createElement("div");
     card.classList.add("flight-card");
 
     card.innerHTML = flight.type === "oneway"
       ? `
-        <h3>${flight.flightNo} - ${flight.destination}</h3>
+        <h3>${flight.flightNo} - ${destination}</h3>
         <p><b>Depart:</b> ${bookingData.departDate} (${flight.departTime})</p>
         <p><b>Price:</b> ₱${flight.price}</p>
         <p><b>Seats Available:</b> ${flight.seats}</p>
@@ -55,7 +57,7 @@ function renderFlights(bookingData) {
         <button class="select-flight">Select Flight</button>
       `
       : `
-        <h3>${flight.flightNo} - ${flight.destination}</h3>
+        <h3>${flight.flightNo} - ${destination}</h3>
         <p><b>Depart:</b> ${bookingData.departDate} (${flight.departTime})</p>
         <p><b>Return:</b> ${bookingData.returnDate} (${flight.returnTime})</p>
         <p><b>Price:</b> ₱${flight.price}</p>
@@ -66,19 +68,17 @@ function renderFlights(bookingData) {
       `;
 
     card.querySelector(".select-flight").addEventListener("click", () => {
-  selectedFlight = flight;
-  alert(`You selected flight ${flight.flightNo}!`);
-  
-  // ✅ Enable passenger form only when flight selected
-  const totalPassengers = bookingSummary.bookingData?.passengers || 0;
-  if (totalPassengers > 0) {
-    setPassengerFormEnabled(true);
-  }
-});
+      selectedFlight = { ...flight, destination };
+      alert(`You selected flight ${flight.flightNo}!`);
+
+      const totalPassengers = bookingSummary.bookingData?.passengers || 0;
+      if (totalPassengers > 0) setPassengerFormEnabled(true);
+    });
 
     flightsList.appendChild(card);
   });
 }
+
 
 
 
