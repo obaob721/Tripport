@@ -455,41 +455,6 @@ button[type="submit"]:hover {
 
 
 
-
-
-
-.summary {
-  width: 100%;
-  min-height: 100vh;
-  background: url('img/airplane3.jpg') no-repeat center center/cover;
-  padding: 10px 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.summary-container {
-  background: rgba(255, 255, 255, 0.30);
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 700px;
-}
-
-.summary-container h2 {
-  text-align: center;
-  color: #da5700;
-  margin-bottom: 30px;
-}
-
-#passenger-summary, #flight-summary{
-  display: table;
-  width: 100%;
-  border-collapse: collapse;
-}
-
-
 .summary {
   width: 100%;
   min-height: 100vh;
@@ -566,6 +531,7 @@ button[type="submit"]:hover {
 #bookNowBtn:hover {
   background-color: #f05000;
 }
+
 
 #successMessage {
   text-align: center;

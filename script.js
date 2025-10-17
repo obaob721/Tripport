@@ -148,8 +148,26 @@ function setPassengerFormEnabled(enabled) {
 setPassengerFormEnabled(false);
 
 // ===============================
-// 📋 SUMMARY DISPLAY LOGIC
+// ✅ BOOK NOW BUTTON (connected to summary)
 // ===============================
+const bookNowBtn = document.getElementById("bookNowBtn");
+const successMessage = document.getElementById("successMessage");
+
+// hide button initially
+bookNowBtn.style.display = "none";
+
+function updateBookNowButtonVisibility() {
+  const { bookingData, passengers } = bookingSummary;
+  // Only show if both bookingData and passengers exist and have at least one entry
+  if (bookingData && passengers.length > 0 && selectedFlight) {
+    bookNowBtn.style.display = "inline-block";
+    bookNowBtn.disabled = false;
+  } else {
+    bookNowBtn.style.display = "none";
+  }
+}
+
+// modify displaySummary() to update the button visibility
 function displaySummary() {
   const passengerTableBody = document.querySelector("#passenger-summary tbody");
   const flightTableBody = document.querySelector("#flight-summary tbody");
@@ -185,18 +203,22 @@ function displaySummary() {
       <td>₱${selectedFlight.price * bookingData.passengers}</td>`;
     flightTableBody.appendChild(row);
   }
+
+  // 🟩 Update Book Now button visibility based on summary
+  updateBookNowButtonVisibility();
 }
 
-// ===============================
-// ✅ BOOK NOW BUTTON
-// ===============================
-document.getElementById("bookNowBtn").addEventListener("click", function () {
-  const msg = document.getElementById("successMessage");
-  msg.classList.remove("hidden");
+// 🟢 Book Now Button Functionality
+bookNowBtn.addEventListener("click", function () {
+  successMessage.classList.remove("hidden");
   this.disabled = true;
   this.style.backgroundColor = "#ccc";
   this.innerText = "Booked";
 });
+
+
+
+
 
 // ===============================
 // ✅ NAVBAR ACTIVE HIGHLIGHT
