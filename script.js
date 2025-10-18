@@ -1,6 +1,3 @@
-// ===============================
-// ✈️ BOOKING SECTION LOGIC
-// ===============================
 const bookingForm = document.getElementById("bookingForm");
 const flightType = document.getElementById("flightType");
 const returnDateContainer = document.getElementById("returnDateContainer");
@@ -16,9 +13,29 @@ flightType.addEventListener("change", () => {
     flightType.value === "roundtrip" ? "block" : "none";
 });
 
-// ===============================
-// ✈️ FLIGHT SECTION LOGIC
-// ===============================
+bookingForm.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const bookingData = {
+    from: document.getElementById("from").value,
+    to: document.getElementById("to").value,
+    flightType: flightType.value,
+    departDate: document.getElementById("departDate").value,
+    returnDate: document.getElementById("returnDate").value,
+    passengers: parseInt(document.getElementById("passengers").value)
+  };
+
+  bookingSummary.bookingData = bookingData;
+  bookingSummary.passengers = [];
+  renderFlights(bookingData);
+
+  document.querySelector("#flight").scrollIntoView({ behavior: "smooth" });
+});
+
+
+
+
+
 const schedules = [
   { flightNo: "5J 560", route: "→", departTime: "08:00 AM", hours: 1.5, price: 3500, seats: 20, fareType: "Promo Fare", type: "oneway" },
   { flightNo: "PR 2814", route: "→", departTime: "10:30 AM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
@@ -60,7 +77,6 @@ function renderFlights(bookingData) {
         <button class="select-flight">Select Flight</button>
       `;
 
-    // 🟩 When selecting flight, enable passenger + scroll
     card.querySelector(".select-flight").addEventListener("click", () => {
       selectedFlight = { ...flight, destination };
       alert(`You selected flight ${flight.flightNo}!`);
@@ -76,30 +92,10 @@ function renderFlights(bookingData) {
   });
 }
 
-// ✅ Booking form submission (render flights + smooth scroll)
-bookingForm.addEventListener("submit", e => {
-  e.preventDefault();
 
-  const bookingData = {
-    from: document.getElementById("from").value,
-    to: document.getElementById("to").value,
-    flightType: flightType.value,
-    departDate: document.getElementById("departDate").value,
-    returnDate: document.getElementById("returnDate").value,
-    passengers: parseInt(document.getElementById("passengers").value)
-  };
 
-  bookingSummary.bookingData = bookingData;
-  bookingSummary.passengers = [];
-  renderFlights(bookingData);
 
-  // 🟦 Smooth scroll to flight section
-  document.querySelector("#flight").scrollIntoView({ behavior: "smooth" });
-});
 
-// ===============================
-// 👤 PASSENGER SECTION LOGIC
-// ===============================
 let passengerCount = 0;
 
 function validatePassengerForm() {
@@ -132,7 +128,6 @@ function validatePassengerForm() {
     setPassengerFormEnabled(false);
     displaySummary();
 
-    // 🟨 Scroll to summary after last passenger
     document.querySelector("#summary").scrollIntoView({ behavior: "smooth" });
   }
 
@@ -144,21 +139,20 @@ function setPassengerFormEnabled(enabled) {
   inputs.forEach(el => el.disabled = !enabled);
 }
 
-// disable passenger form initially
 setPassengerFormEnabled(false);
 
-// ===============================
-// ✅ BOOK NOW BUTTON (connected to summary)
-// ===============================
+
+
+
+
 const bookNowBtn = document.getElementById("bookNowBtn");
 const successMessage = document.getElementById("successMessage");
 
-// hide button initially
 bookNowBtn.style.display = "none";
 
 function updateBookNowButtonVisibility() {
   const { bookingData, passengers } = bookingSummary;
-  // Only show if both bookingData and passengers exist and have at least one entry
+ 
   if (bookingData && passengers.length > 0 && selectedFlight) {
     bookNowBtn.style.display = "inline-block";
     bookNowBtn.disabled = false;
@@ -167,7 +161,6 @@ function updateBookNowButtonVisibility() {
   }
 }
 
-// modify displaySummary() to update the button visibility
 function displaySummary() {
   const passengerTableBody = document.querySelector("#passenger-summary tbody");
   const flightTableBody = document.querySelector("#flight-summary tbody");
@@ -204,11 +197,9 @@ function displaySummary() {
     flightTableBody.appendChild(row);
   }
 
-  // 🟩 Update Book Now button visibility based on summary
   updateBookNowButtonVisibility();
 }
 
-// 🟢 Book Now Button Functionality
 bookNowBtn.addEventListener("click", function () {
   successMessage.classList.remove("hidden");
   this.disabled = true;
@@ -220,9 +211,6 @@ bookNowBtn.addEventListener("click", function () {
 
 
 
-// ===============================
-// ✅ NAVBAR ACTIVE HIGHLIGHT
-// ===============================
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll("ul li a");
 

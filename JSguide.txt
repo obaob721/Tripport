@@ -1,0 +1,35 @@
+1. Booking Section Logic
+	1.1 const & let
+	1.2 let bookingSummary
+	1.3 flightType.addEventListener
+	1.4 bookingForm.addEventListener
+
+2. Flight Section Logic
+	2.1 const schedules
+	2.2 function renderFlights
+
+3. Passenger Section Logic
+	3.1 let passengerCount
+	3.2 function validatePassengerForm
+	3.3 function setPassengerFormEnabled
+
+4. Summary Section Logic
+	4.1 const & bookBowBtn
+	4.2 function updateBookNowButtonVisibility
+	4.3 function displaySummary
+	4.4 bookNowBtn.addEventListener
+
+5. Navbar Active Highlight
+	5.1 const
+	5.2 window.addEventListener
+	5.3 document.addEventLister
+
+
+
+
+PROCESS:
+1. Home Page
+2. Book Page
+3. Flight Page
+4. Passenger Page
+5. Summary Page
