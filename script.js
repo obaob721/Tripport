@@ -37,12 +37,12 @@ bookingForm.addEventListener("submit", e => {
 
 
 const schedules = [
-  { flightNo: "5J 560", route: "→", departTime: "08:00 AM", hours: 1.5, price: 3500, seats: 20, fareType: "Promo Fare", type: "oneway" },
-  { flightNo: "PR 2814", route: "→", departTime: "10:30 AM", hours: 2, price: 4200, seats: 15, fareType: "None", type: "oneway" },
-  { flightNo: "DG 6208", route: "→", departTime: "02:00 PM", hours: 1, price: 3100, seats: 12, fareType: "Promo Fare", type: "oneway" },
-  { flightNo: "5J 561", route: "↔", departTime: "09:00 AM", returnTime: "06:00 PM", hours: 3, price: 7000, seats: 18, fareType: "Promo Fare", type: "roundtrip" },
-  { flightNo: "PR 4512", route: "↔", departTime: "11:30 AM", returnTime: "07:00 PM", hours: 4, price: 8900, seats: 10, fareType: "None", type: "roundtrip" },
-  { flightNo: "DG 8123", route: "↔", departTime: "03:00 PM", returnTime: "04:00 PM", hours: 3.5, price: 7500, seats: 8, fareType: "Promo Fare", type: "roundtrip" },
+  { flightNo: "5J 560", route: "→", departTime: "06:00 AM", hours: 1.5, price: 1299, seats: 60, fareType: "Promo Fare", type: "oneway" },
+  { flightNo: "PR 2814", route: "→", departTime: "02:00 PM", hours: 1, price: 4500, seats: 30, fareType: "None", type: "oneway" },
+  { flightNo: "DG 6208", route: "→", departTime: "10:00 PM", hours: 2, price: 4800, seats: 8, fareType: "None", type: "oneway" },
+  { flightNo: "5J 561", route: "↔", departTime: "08:00 AM", returnTime: "12:00 PM", hours: 3, price: 2598, seats: 50, fareType: "Promo Fare", type: "roundtrip" },
+  { flightNo: "PR 4512", route: "↔", departTime: "04:00 PM", returnTime: "08:00 PM", hours: 2, price: 9000, seats: 25, fareType: "None", type: "roundtrip" },
+  { flightNo: "DG 8123", route: "↔", departTime: "12:00 AM", returnTime: "09:00 AM", hours: 4, price: 9600, seats: 5, fareType: "None", type: "roundtrip" },
 ];
 
 function renderFlights(bookingData) {
@@ -200,12 +200,113 @@ function displaySummary() {
   updateBookNowButtonVisibility();
 }
 
+
+
+
+
 bookNowBtn.addEventListener("click", function () {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const { bookingData, passengers } = bookingSummary;
+
+  doc.setFillColor(255, 140, 0); 
+  doc.rect(0, 0, 210, 30, "F");
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(20);
+  doc.setTextColor(255, 255, 255);
+  doc.text("✈ TRIPPORT AIRLINES", 15, 20);
+
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(14);
+  doc.text("FLIGHT BOOKING RECEIPT", 15, 45);
+  doc.setFontSize(10);
+  doc.text(`Booking Date: ${new Date().toLocaleDateString()}`, 150, 45);
+
+  doc.setDrawColor(0);
+  doc.setLineWidth(0.5);
+  doc.rect(10, 50, 190, 40); 
+
+  doc.setFont("helvetica", "bold");
+  doc.text("Flight Details", 15, 57);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Flight No: ${selectedFlight.flightNo}`, 15, 65);
+  doc.text(`From: ${bookingData.from}`, 15, 72);
+  doc.text(`To: ${bookingData.to}`, 15, 79);
+  doc.text(`Type: ${bookingData.flightType}`, 15, 86);
+
+  doc.text(`Depart: ${bookingData.departDate} (${selectedFlight.departTime})`, 100, 65);
+  if (bookingData.flightType === "roundtrip") {
+    doc.text(`Return: ${bookingData.returnDate} (${selectedFlight.returnTime})`, 100, 72);
+  } else {
+    doc.text(`Return: N/A`, 100, 72);
+  }
+  doc.text(`Fare Type: ${selectedFlight.fareType}`, 100, 79);
+  doc.text(`Travel Time: ${selectedFlight.hours} hr(s)`, 100, 86);
+
+  doc.setFont("helvetica", "bold");
+  doc.text("Passenger Information", 15, 105);
+
+  let y = 112;
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+
+  doc.text("No", 15, y);
+  doc.text("Name", 25, y);
+  doc.text("Age", 85, y);
+  doc.text("Gender", 100, y);
+  doc.text("Email", 125, y);
+  doc.text("Phone", 165, y);
+
+  y += 5;
+  doc.setLineWidth(0.1);
+  doc.line(10, y, 200, y);
+
+  passengers.forEach((p, i) => {
+    y += 8;
+    doc.text(`${i + 1}`, 15, y);
+    doc.text(`${p.firstName} ${p.lastName}`, 25, y);
+    doc.text(`${p.age}`, 85, y);
+    doc.text(`${p.gender}`, 100, y);
+    doc.text(`${p.email}`, 125, y, { maxWidth: 35 });
+    doc.text(`${p.phone}`, 165, y);
+    if (y > 260) {
+      doc.addPage();
+      y = 20;
+    }
+  });
+
+  y += 15;
+  doc.setDrawColor(0);
+  doc.rect(10, y, 190, 25);
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "bold");
+  doc.text("Payment Summary", 15, y + 8);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Price per Passenger: P ${selectedFlight.price}`, 15, y + 16);
+  doc.text(
+    `Total Amount: P ${selectedFlight.price * bookingData.passengers}`,
+    100,
+    y + 16
+  );
+
+  doc.setFontSize(9);
+  doc.setTextColor(100);
+  doc.text(
+    "Thank you for flying with Tripport Airlines. Have a safe and pleasant journey!",
+    15,
+    290
+  );
+  doc.text("This is a system-generated ticket. No signature required.", 15, 295);
+
+  doc.save(`Flight_Ticket_${selectedFlight.flightNo}.pdf`);
+
   successMessage.classList.remove("hidden");
   this.disabled = true;
   this.style.backgroundColor = "#ccc";
   this.innerText = "Booked";
 });
+
 
 
 
