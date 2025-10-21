@@ -221,7 +221,7 @@ bookNowBtn.addEventListener("click", function () {
 
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(14);
-  doc.text("FLIGHT BOOKING RECEIPT", 15, 45);
+  doc.text("FLIGHT BOOKING TICKET", 15, 45);
   doc.setFontSize(10);
   doc.text(`Booking Date: ${new Date().toLocaleDateString()}`, 150, 45);
 
@@ -310,6 +310,27 @@ bookNowBtn.addEventListener("click", function () {
     100,
     y + 16
   );
+
+  y += 35;
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(11);
+  doc.setTextColor(0, 0, 0);
+  doc.text("Important Reminders:", 15, y);
+
+  y += 8;
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  const reminders = [
+    "1. Please arrive at least 2 hours before your scheduled departure.",
+    "2. Bring a valid ID matching the name on your ticket.",
+    "3. Ensure your baggage meets airline weight and size restrictions.",
+    "4. Tickets are non-transferable and subject to airline policies.",
+    "5. Recheck flight details before departure in case of schedule changes."
+  ];
+
+  reminders.forEach((reminder, index) => {
+    doc.text(reminder, 15, y + (index + 1) * 6);
+  });
 
   doc.setFontSize(9);
   doc.setTextColor(100);
