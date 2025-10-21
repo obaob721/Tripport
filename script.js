@@ -37,10 +37,10 @@ bookingForm.addEventListener("submit", e => {
 
 
 const schedules = [
-  { flightNo: "5J 560", route: "→", departTime: "06:00 AM", hours: 1.5, price: 1299, seats: 60, fareType: "Promo Fare", type: "oneway", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
+  { flightNo: "5J 560", route: "→", departTime: "06:00 AM", hours: 1.5, price: 1999, seats: 60, fareType: "Promo Fare", type: "oneway", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
   { flightNo: "PR 2814", route: "→", departTime: "02:00 PM", hours: 1, price: 4500, seats: 30, fareType: "None", type: "oneway", fromTerminal: "Terminal 1", toTerminal: "Terminal 3" },
   { flightNo: "DG 6208", route: "→", departTime: "10:00 PM", hours: 2, price: 4800, seats: 8, fareType: "None", type: "oneway", fromTerminal: "Terminal 2", toTerminal: "Terminal 1" },
-  { flightNo: "5J 561", route: "↔", departTime: "08:00 AM", returnTime: "12:00 PM", hours: 3, price: 2598, seats: 50, fareType: "Promo Fare", type: "roundtrip", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
+  { flightNo: "5J 561", route: "↔", departTime: "08:00 AM", returnTime: "12:00 PM", hours: 3, price: 3998, seats: 50, fareType: "Promo Fare", type: "roundtrip", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
   { flightNo: "PR 4512", route: "↔", departTime: "04:00 PM", returnTime: "08:00 PM", hours: 2, price: 9000, seats: 25, fareType: "None", type: "roundtrip", fromTerminal: "Terminal 3", toTerminal: "Terminal 1" },
   { flightNo: "DG 8123", route: "↔", departTime: "12:00 AM", returnTime: "09:00 AM", hours: 4, price: 9600, seats: 5, fareType: "None", type: "roundtrip", fromTerminal: "Terminal 4", toTerminal: "Terminal 2" },
 ];
@@ -61,8 +61,6 @@ function renderFlights(bookingData) {
     ? `
       <h3>${flight.flightNo} - ${destination}</h3>
       <p><b>Depart:</b> ${bookingData.departDate} (${flight.departTime})</p>
-      <p><b>Departing:</b> ${bookingData.from} International Airport ${flight.fromTerminal}</p>
-      <p><b>Arriving:</b> ${bookingData.to} International Airport ${flight.toTerminal}</p>
       <p><b>Price:</b> ₱${flight.price}</p>
       <p><b>Seats Available:</b> ${flight.seats}</p>
       <p><b>Travel Time:</b> ${flight.hours} hr(s)</p>
@@ -72,8 +70,6 @@ function renderFlights(bookingData) {
     : `
       <h3>${flight.flightNo} - ${destination}</h3>
       <p><b>Depart:</b> ${bookingData.departDate} (${flight.departTime})</p>
-      <p><b>Departing:</b> ${bookingData.from} International Airport ${flight.fromTerminal}</p>
-      <p><b>Arriving:</b> ${bookingData.to} International Airport ${flight.toTerminal}</p>
       <p><b>Return:</b> ${bookingData.returnDate} (${flight.returnTime})</p>
       <p><b>Price:</b> ₱${flight.price}</p>
       <p><b>Seats Available:</b> ${flight.seats}</p>
@@ -206,7 +202,7 @@ function displaySummary() {
   updateBookNowButtonVisibility();
 }
 
-f
+
 
 
 
@@ -216,7 +212,6 @@ bookNowBtn.addEventListener("click", function () {
 
   const { bookingData, passengers } = bookingSummary;
 
-  // ===== HEADER =====
   doc.setFillColor(255, 140, 0);
   doc.rect(0, 0, 210, 30, "F");
   doc.setFont("helvetica", "bold");
@@ -230,7 +225,6 @@ bookNowBtn.addEventListener("click", function () {
   doc.setFontSize(10);
   doc.text(`Booking Date: ${new Date().toLocaleDateString()}`, 150, 45);
 
-  // ===== FLIGHT SECTION =====
   doc.setFont("helvetica", "bold");
   doc.text("Flight Information", 15, 57);
   doc.setFont("helvetica", "normal");
@@ -245,7 +239,6 @@ bookNowBtn.addEventListener("click", function () {
   leftY += 7;
   doc.text(`Fare Type: ${selectedFlight.fareType}`, 15, leftY);
 
-  // Right column: Flight Details
   const rightX = 110;
   doc.setFont("helvetica", "bold");
   doc.text("Flight Details", rightX, 57);
@@ -265,16 +258,13 @@ bookNowBtn.addEventListener("click", function () {
   rightY += 7;
   doc.text(`Travel Time: ${selectedFlight.hours} hr(s)`, rightX, rightY);
 
-  // Calculate box height dynamically
   const boxBottom = Math.max(leftY, rightY) + 5;
   const boxHeight = boxBottom - 50;
 
-  // Draw box AFTER text so it resizes properly
   doc.setDrawColor(0);
   doc.setLineWidth(0.5);
   doc.rect(10, 50, 190, boxHeight);
 
-  // ===== PASSENGER SECTION =====
   doc.setFont("helvetica", "bold");
   doc.text("Passenger Information", 15, boxBottom + 10);
 
@@ -307,7 +297,6 @@ bookNowBtn.addEventListener("click", function () {
     }
   });
 
-  // ===== PAYMENT SUMMARY =====
   y += 15;
   doc.setDrawColor(0);
   doc.rect(10, y, 190, 25);
@@ -322,7 +311,6 @@ bookNowBtn.addEventListener("click", function () {
     y + 16
   );
 
-  // ===== FOOTER =====
   doc.setFontSize(9);
   doc.setTextColor(100);
   doc.text(
@@ -339,8 +327,6 @@ bookNowBtn.addEventListener("click", function () {
   this.style.backgroundColor = "#ccc";
   this.innerText = "Booked";
 });
-
-
 
 
 
