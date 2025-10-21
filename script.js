@@ -37,13 +37,14 @@ bookingForm.addEventListener("submit", e => {
 
 
 const schedules = [
-  { flightNo: "5J 560", route: "→", departTime: "06:00 AM", hours: 1.5, price: 1299, seats: 60, fareType: "Promo Fare", type: "oneway" },
-  { flightNo: "PR 2814", route: "→", departTime: "02:00 PM", hours: 1, price: 4500, seats: 30, fareType: "None", type: "oneway" },
-  { flightNo: "DG 6208", route: "→", departTime: "10:00 PM", hours: 2, price: 4800, seats: 8, fareType: "None", type: "oneway" },
-  { flightNo: "5J 561", route: "↔", departTime: "08:00 AM", returnTime: "12:00 PM", hours: 3, price: 2598, seats: 50, fareType: "Promo Fare", type: "roundtrip" },
-  { flightNo: "PR 4512", route: "↔", departTime: "04:00 PM", returnTime: "08:00 PM", hours: 2, price: 9000, seats: 25, fareType: "None", type: "roundtrip" },
-  { flightNo: "DG 8123", route: "↔", departTime: "12:00 AM", returnTime: "09:00 AM", hours: 4, price: 9600, seats: 5, fareType: "None", type: "roundtrip" },
+  { flightNo: "5J 560", route: "→", departTime: "06:00 AM", hours: 1.5, price: 1299, seats: 60, fareType: "Promo Fare", type: "oneway", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
+  { flightNo: "PR 2814", route: "→", departTime: "02:00 PM", hours: 1, price: 4500, seats: 30, fareType: "None", type: "oneway", fromTerminal: "Terminal 1", toTerminal: "Terminal 3" },
+  { flightNo: "DG 6208", route: "→", departTime: "10:00 PM", hours: 2, price: 4800, seats: 8, fareType: "None", type: "oneway", fromTerminal: "Terminal 2", toTerminal: "Terminal 1" },
+  { flightNo: "5J 561", route: "↔", departTime: "08:00 AM", returnTime: "12:00 PM", hours: 3, price: 2598, seats: 50, fareType: "Promo Fare", type: "roundtrip", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
+  { flightNo: "PR 4512", route: "↔", departTime: "04:00 PM", returnTime: "08:00 PM", hours: 2, price: 9000, seats: 25, fareType: "None", type: "roundtrip", fromTerminal: "Terminal 3", toTerminal: "Terminal 1" },
+  { flightNo: "DG 8123", route: "↔", departTime: "12:00 AM", returnTime: "09:00 AM", hours: 4, price: 9600, seats: 5, fareType: "None", type: "roundtrip", fromTerminal: "Terminal 4", toTerminal: "Terminal 2" },
 ];
+
 
 function renderFlights(bookingData) {
   const flightsList = document.getElementById("flightsList");
@@ -57,25 +58,30 @@ function renderFlights(bookingData) {
     card.classList.add("flight-card");
 
     card.innerHTML = flight.type === "oneway"
-      ? `
-        <h3>${flight.flightNo} - ${destination}</h3>
-        <p><b>Depart:</b> ${bookingData.departDate} (${flight.departTime})</p>
-        <p><b>Price:</b> ₱${flight.price}</p>
-        <p><b>Seats Available:</b> ${flight.seats}</p>
-        <p><b>Travel Time:</b> ${flight.hours} hr(s)</p>
-        <p><b>Fare Type:</b> ${flight.fareType}</p>
-        <button class="select-flight">Select Flight</button>
-      `
-      : `
-        <h3>${flight.flightNo} - ${destination}</h3>
-        <p><b>Depart:</b> ${bookingData.departDate} (${flight.departTime})</p>
-        <p><b>Return:</b> ${bookingData.returnDate} (${flight.returnTime})</p>
-        <p><b>Price:</b> ₱${flight.price}</p>
-        <p><b>Seats Available:</b> ${flight.seats}</p>
-        <p><b>Travel Time:</b> ${flight.hours} hr(s)</p>
-        <p><b>Fare Type:</b> ${flight.fareType}</p>
-        <button class="select-flight">Select Flight</button>
-      `;
+    ? `
+      <h3>${flight.flightNo} - ${destination}</h3>
+      <p><b>Depart:</b> ${bookingData.departDate} (${flight.departTime})</p>
+      <p><b>Departing:</b> ${bookingData.from} International Airport ${flight.fromTerminal}</p>
+      <p><b>Arriving:</b> ${bookingData.to} International Airport ${flight.toTerminal}</p>
+      <p><b>Price:</b> ₱${flight.price}</p>
+      <p><b>Seats Available:</b> ${flight.seats}</p>
+      <p><b>Travel Time:</b> ${flight.hours} hr(s)</p>
+      <p><b>Fare Type:</b> ${flight.fareType}</p>
+      <button class="select-flight">Select Flight</button>
+    `
+    : `
+      <h3>${flight.flightNo} - ${destination}</h3>
+      <p><b>Depart:</b> ${bookingData.departDate} (${flight.departTime})</p>
+      <p><b>Departing:</b> ${bookingData.from} International Airport ${flight.fromTerminal}</p>
+      <p><b>Arriving:</b> ${bookingData.to} International Airport ${flight.toTerminal}</p>
+      <p><b>Return:</b> ${bookingData.returnDate} (${flight.returnTime})</p>
+      <p><b>Price:</b> ₱${flight.price}</p>
+      <p><b>Seats Available:</b> ${flight.seats}</p>
+      <p><b>Travel Time:</b> ${flight.hours} hr(s)</p>
+      <p><b>Fare Type:</b> ${flight.fareType}</p>
+      <button class="select-flight">Select Flight</button>
+    `;
+
 
     card.querySelector(".select-flight").addEventListener("click", () => {
       selectedFlight = { ...flight, destination };
@@ -200,7 +206,7 @@ function displaySummary() {
   updateBookNowButtonVisibility();
 }
 
-
+f
 
 
 
@@ -210,12 +216,13 @@ bookNowBtn.addEventListener("click", function () {
 
   const { bookingData, passengers } = bookingSummary;
 
-  doc.setFillColor(255, 140, 0); 
+  // ===== HEADER =====
+  doc.setFillColor(255, 140, 0);
   doc.rect(0, 0, 210, 30, "F");
   doc.setFont("helvetica", "bold");
   doc.setFontSize(20);
   doc.setTextColor(255, 255, 255);
-  doc.text("✈ TRIPPORT AIRLINES", 15, 20);
+  doc.text("TRIPPORT AIRLINES", 15, 20);
 
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(14);
@@ -223,31 +230,55 @@ bookNowBtn.addEventListener("click", function () {
   doc.setFontSize(10);
   doc.text(`Booking Date: ${new Date().toLocaleDateString()}`, 150, 45);
 
+  // ===== FLIGHT SECTION =====
+  doc.setFont("helvetica", "bold");
+  doc.text("Flight Information", 15, 57);
+  doc.setFont("helvetica", "normal");
+  let leftY = 65;
+  doc.text(`Flight No: ${selectedFlight.flightNo}`, 15, leftY);
+  leftY += 7;
+  doc.text(`From: ${bookingData.from}`, 15, leftY);
+  leftY += 7;
+  doc.text(`To: ${bookingData.to}`, 15, leftY);
+  leftY += 7;
+  doc.text(`Type: ${bookingData.flightType}`, 15, leftY);
+  leftY += 7;
+  doc.text(`Fare Type: ${selectedFlight.fareType}`, 15, leftY);
+
+  // Right column: Flight Details
+  const rightX = 110;
+  doc.setFont("helvetica", "bold");
+  doc.text("Flight Details", rightX, 57);
+  doc.setFont("helvetica", "normal");
+  let rightY = 65;
+  doc.text(`Depart: ${bookingData.departDate} (${selectedFlight.departTime})`, rightX, rightY);
+  rightY += 7;
+  doc.text(`Departing: ${bookingData.from} International Airport ${selectedFlight.fromTerminal}`, rightX, rightY, { maxWidth: 90 });
+  rightY += 7;
+  doc.text(`Arriving: ${bookingData.to} International Airport ${selectedFlight.toTerminal}`, rightX, rightY, { maxWidth: 90 });
+  rightY += 7;
+  if (bookingData.flightType === "roundtrip") {
+    doc.text(`Return: ${bookingData.returnDate} (${selectedFlight.returnTime})`, rightX, rightY);
+  } else {
+    doc.text(`Return: N/A`, rightX, rightY);
+  }
+  rightY += 7;
+  doc.text(`Travel Time: ${selectedFlight.hours} hr(s)`, rightX, rightY);
+
+  // Calculate box height dynamically
+  const boxBottom = Math.max(leftY, rightY) + 5;
+  const boxHeight = boxBottom - 50;
+
+  // Draw box AFTER text so it resizes properly
   doc.setDrawColor(0);
   doc.setLineWidth(0.5);
-  doc.rect(10, 50, 190, 40); 
+  doc.rect(10, 50, 190, boxHeight);
 
+  // ===== PASSENGER SECTION =====
   doc.setFont("helvetica", "bold");
-  doc.text("Flight Details", 15, 57);
-  doc.setFont("helvetica", "normal");
-  doc.text(`Flight No: ${selectedFlight.flightNo}`, 15, 65);
-  doc.text(`From: ${bookingData.from}`, 15, 72);
-  doc.text(`To: ${bookingData.to}`, 15, 79);
-  doc.text(`Type: ${bookingData.flightType}`, 15, 86);
+  doc.text("Passenger Information", 15, boxBottom + 10);
 
-  doc.text(`Depart: ${bookingData.departDate} (${selectedFlight.departTime})`, 100, 65);
-  if (bookingData.flightType === "roundtrip") {
-    doc.text(`Return: ${bookingData.returnDate} (${selectedFlight.returnTime})`, 100, 72);
-  } else {
-    doc.text(`Return: N/A`, 100, 72);
-  }
-  doc.text(`Fare Type: ${selectedFlight.fareType}`, 100, 79);
-  doc.text(`Travel Time: ${selectedFlight.hours} hr(s)`, 100, 86);
-
-  doc.setFont("helvetica", "bold");
-  doc.text("Passenger Information", 15, 105);
-
-  let y = 112;
+  let y = boxBottom + 17;
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
 
@@ -276,6 +307,7 @@ bookNowBtn.addEventListener("click", function () {
     }
   });
 
+  // ===== PAYMENT SUMMARY =====
   y += 15;
   doc.setDrawColor(0);
   doc.rect(10, y, 190, 25);
@@ -283,13 +315,14 @@ bookNowBtn.addEventListener("click", function () {
   doc.setFont("helvetica", "bold");
   doc.text("Payment Summary", 15, y + 8);
   doc.setFont("helvetica", "normal");
-  doc.text(`Price per Passenger: P ${selectedFlight.price}`, 15, y + 16);
+  doc.text(`Price per Passenger: P${selectedFlight.price}`, 15, y + 16);
   doc.text(
-    `Total Amount: P ${selectedFlight.price * bookingData.passengers}`,
+    `Total Amount: P${selectedFlight.price * bookingData.passengers}`,
     100,
     y + 16
   );
 
+  // ===== FOOTER =====
   doc.setFontSize(9);
   doc.setTextColor(100);
   doc.text(
@@ -306,6 +339,7 @@ bookNowBtn.addEventListener("click", function () {
   this.style.backgroundColor = "#ccc";
   this.innerText = "Booked";
 });
+
 
 
 
