@@ -78,11 +78,9 @@ function renderFlights(bookingData) {
       <button class="select-flight">Select Flight</button>
     `;
 
-// Select promo code field (make sure you added this <input id="promoCode"> in your HTML passenger form)
 const promoCodeInput = document.getElementById("promoCode");
 const promoCodeContainer = document.getElementById("promoCodeContainer");
 
-// Initially hide promo code input
 promoCodeContainer.style.display = "none";
 
     function showPromoCodeField(show) {
@@ -94,7 +92,6 @@ promoCodeContainer.style.display = "none";
       selectedFlight = { ...flight, destination };
       alert(`You selected flight ${flight.flightNo}!`);
 
-      // If Promo Fare, show promo code notification
   if (flight.fareType === "Promo Fare") {
     alert("Promo Code: TRIP20");
     showPromoCodeField(true);
@@ -138,9 +135,8 @@ function validatePassengerForm() {
     return false;
   }
 
-  // ✅ Promo code validation
   if (selectedFlight && selectedFlight.fareType === "Promo Fare") {
-    // If user entered something but not "TRIP20", show alert
+ 
     if (promoCodeValue !== "" && promoCodeValue !== "TRIP20") {
       alert("Invalid promo code. Please enter the correct code.");
       return false;
@@ -219,10 +215,9 @@ function displaySummary() {
     let totalAmount = 0;
     const pricePerPassenger = selectedFlight.price;
 
-    // Calculate total discount and amount
     passengers.forEach(p => {
       if (selectedFlight.fareType === "Promo Fare" && p.promoCode === "TRIP20") {
-        totalDiscount += pricePerPassenger * 0.2; // 20% discount
+        totalDiscount += pricePerPassenger * 0.2;
         totalAmount += pricePerPassenger * 0.8;
       } else {
         totalAmount += pricePerPassenger;
@@ -320,47 +315,55 @@ bookNowBtn.addEventListener("click", function () {
 
   doc.text("No", 15, y);
   doc.text("Name", 25, y);
-  doc.text("Age", 85, y);
-  doc.text("Gender", 100, y);
-  doc.text("Email", 125, y);
-  doc.text("Phone", 165, y);
+  doc.text("Age", 75, y);
+  doc.text("Gender", 90, y);
+  doc.text("Email", 110, y);
+  doc.text("Phone", 150, y);
+  doc.text("Promo Code", 175, y);
 
   y += 5;
   doc.setLineWidth(0.1);
   doc.line(10, y, 200, y);
 
+  let totalDiscount = 0;
+  const pricePerPassenger = selectedFlight.price;
+
   passengers.forEach((p, i) => {
     y += 8;
+    const hasPromo = selectedFlight.fareType === "Promo Fare" && p.promoCode === "TRIP20";
+    if (hasPromo) totalDiscount += pricePerPassenger * 0.2;
+
     doc.text(`${i + 1}`, 15, y);
     doc.text(`${p.firstName} ${p.lastName}`, 25, y);
-    doc.text(`${p.age}`, 85, y);
-    doc.text(`${p.gender}`, 100, y);
-    doc.text(`${p.email}`, 125, y, { maxWidth: 35 });
-    doc.text(`${p.phone}`, 165, y);
+    doc.text(`${p.age}`, 75, y);
+    doc.text(`${p.gender}`, 90, y);
+    doc.text(`${p.email}`, 110, y, { maxWidth: 35 });
+    doc.text(`${p.phone}`, 150, y);
+    doc.text(`${hasPromo ? p.promoCode : "-"}`, 175, y);
+
     if (y > 260) {
       doc.addPage();
       y = 20;
     }
   });
 
+  const totalAmount = (pricePerPassenger * passengers.length) - totalDiscount;
+
   y += 15;
   doc.setDrawColor(0);
-  doc.rect(10, y, 190, 25);
+  doc.rect(10, y, 190, 30);
   doc.setFontSize(11);
   doc.setFont("helvetica", "bold");
   doc.text("Payment Summary", 15, y + 8);
   doc.setFont("helvetica", "normal");
-  doc.text(`Price per Passenger: P${selectedFlight.price}`, 15, y + 16);
-  doc.text(
-    `Total Amount: P${selectedFlight.price * bookingData.passengers}`,
-    100,
-    y + 16
-  );
+  doc.text(`Price per Passenger: P${pricePerPassenger.toFixed(2)}`, 15, y + 16);
+  doc.text(`Total Amount: P${totalAmount.toFixed(2)}`, 15, y + 23);
+  doc.text(`Total Discount: P${totalDiscount.toFixed(2)}`, 100, y + 16);
+  
 
-  y += 35;
+  y += 40;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
-  doc.setTextColor(0, 0, 0);
   doc.text("Important Reminders:", 15, y);
 
   y += 8;
@@ -394,6 +397,7 @@ bookNowBtn.addEventListener("click", function () {
   this.style.backgroundColor = "#ccc";
   this.innerText = "Booked";
 });
+
 
 
 
