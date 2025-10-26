@@ -37,10 +37,10 @@ bookingForm.addEventListener("submit", e => {
 
 
 const schedules = [
-  { flightNo: "5J 560", route: "→", departTime: "06:00 AM", hours: 1.5, price: 1999, seats: 60, fareType: "Promo Fare", type: "oneway", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
+  { flightNo: "5J 560", route: "→", departTime: "06:00 AM", hours: 1.5, price: 4300, seats: 60, fareType: "Promo Fare", type: "oneway", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
   { flightNo: "PR 2814", route: "→", departTime: "02:00 PM", hours: 1, price: 4500, seats: 30, fareType: "None", type: "oneway", fromTerminal: "Terminal 1", toTerminal: "Terminal 3" },
   { flightNo: "DG 6208", route: "→", departTime: "10:00 PM", hours: 2, price: 4800, seats: 8, fareType: "None", type: "oneway", fromTerminal: "Terminal 2", toTerminal: "Terminal 1" },
-  { flightNo: "5J 561", route: "↔", departTime: "08:00 AM", returnTime: "12:00 PM", hours: 3, price: 3998, seats: 50, fareType: "Promo Fare", type: "roundtrip", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
+  { flightNo: "5J 561", route: "↔", departTime: "08:00 AM", returnTime: "12:00 PM", hours: 3, price: 8600, seats: 50, fareType: "Promo Fare", type: "roundtrip", fromTerminal: "Terminal 1", toTerminal: "Terminal 2" },
   { flightNo: "PR 4512", route: "↔", departTime: "04:00 PM", returnTime: "08:00 PM", hours: 2, price: 9000, seats: 25, fareType: "None", type: "roundtrip", fromTerminal: "Terminal 3", toTerminal: "Terminal 1" },
   { flightNo: "DG 8123", route: "↔", departTime: "12:00 AM", returnTime: "09:00 AM", hours: 4, price: 9600, seats: 5, fareType: "None", type: "roundtrip", fromTerminal: "Terminal 4", toTerminal: "Terminal 2" },
 ];
@@ -78,10 +78,30 @@ function renderFlights(bookingData) {
       <button class="select-flight">Select Flight</button>
     `;
 
+// Select promo code field (make sure you added this <input id="promoCode"> in your HTML passenger form)
+const promoCodeInput = document.getElementById("promoCode");
+const promoCodeContainer = document.getElementById("promoCodeContainer");
+
+// Initially hide promo code input
+promoCodeContainer.style.display = "none";
+
+    function showPromoCodeField(show) {
+  promoCodeContainer.style.display = show ? "block" : "none";
+  if (!show) promoCodeInput.value = "";
+}
 
     card.querySelector(".select-flight").addEventListener("click", () => {
       selectedFlight = { ...flight, destination };
       alert(`You selected flight ${flight.flightNo}!`);
+
+      // If Promo Fare, show promo code notification
+  if (flight.fareType === "Promo Fare") {
+    alert("Promo Code: TRIP20");
+    showPromoCodeField(true);
+  } else {
+    showPromoCodeField(false);
+  }
+
 
       const totalPassengers = bookingSummary.bookingData?.passengers || 0;
       if (totalPassengers > 0) {
@@ -107,6 +127,7 @@ function validatePassengerForm() {
   const phone = document.getElementById("phone").value.trim();
   const age = document.getElementById("age").value;
   const gender = document.getElementById("gender").value;
+  const promoCodeValue = document.getElementById("promoCode").value.trim();
 
   if (!/^\d{11}$/.test(phone)) {
     alert("Phone number must be exactly 11 digits.");
@@ -117,7 +138,16 @@ function validatePassengerForm() {
     return false;
   }
 
-  bookingSummary.passengers.push({ firstName, lastName, email, phone, age, gender });
+  // ✅ Promo code validation
+  if (selectedFlight && selectedFlight.fareType === "Promo Fare") {
+    // If user entered something but not "TRIP20", show alert
+    if (promoCodeValue !== "" && promoCodeValue !== "TRIP20") {
+      alert("Invalid promo code. Please enter the correct code.");
+      return false;
+    }
+  }
+
+  bookingSummary.passengers.push({ firstName, lastName, email, phone, age, gender, promoCode: promoCodeValue || "-"});
   passengerCount++;
 
   const totalPassengers = bookingSummary.bookingData?.passengers || 1;
@@ -163,7 +193,7 @@ function updateBookNowButtonVisibility() {
   }
 }
 
-function displaySummary() {
+function displaySummary() { 
   const passengerTableBody = document.querySelector("#passenger-summary tbody");
   const flightTableBody = document.querySelector("#flight-summary tbody");
   passengerTableBody.innerHTML = "";
@@ -179,11 +209,26 @@ function displaySummary() {
       <td>${p.email}</td>
       <td>${p.phone}</td>
       <td>${p.age}</td>
-      <td>${p.gender}</td>`;
+      <td>${p.gender}</td>
+      <td>${p.promoCode ? p.promoCode : "-"}</td>`;
     passengerTableBody.appendChild(row);
   });
 
   if (bookingData && selectedFlight) {
+    let totalDiscount = 0;
+    let totalAmount = 0;
+    const pricePerPassenger = selectedFlight.price;
+
+    // Calculate total discount and amount
+    passengers.forEach(p => {
+      if (selectedFlight.fareType === "Promo Fare" && p.promoCode === "TRIP20") {
+        totalDiscount += pricePerPassenger * 0.2; // 20% discount
+        totalAmount += pricePerPassenger * 0.8;
+      } else {
+        totalAmount += pricePerPassenger;
+      }
+    });
+
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${bookingData.from}</td>
@@ -194,8 +239,9 @@ function displaySummary() {
       <td>${selectedFlight.flightNo}</td>
       <td>${selectedFlight.destination}</td>
       <td>${selectedFlight.fareType}</td>
-      <td>₱${selectedFlight.price}</td>
-      <td>₱${selectedFlight.price * bookingData.passengers}</td>`;
+      <td>₱${pricePerPassenger.toFixed(2)}</td>
+      <td>₱${totalDiscount.toFixed(2)}</td>
+      <td>₱${totalAmount.toFixed(2)}</td>`;
     flightTableBody.appendChild(row);
   }
 
